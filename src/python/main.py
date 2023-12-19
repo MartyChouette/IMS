@@ -35,16 +35,17 @@ cursor.execute("SELECT * FROM products")
 for row in cursor.fetchall():
     print(row)
 
+
+# Update the product's details
+updated_product = product.UpdateProduct(new_product.productID, "Green Apple", 0.55, 120)
+update_command = "UPDATE products SET name = ?, price = ?, quantity = ? WHERE productID = ?"
+cursor.execute(update_command, (updated_product.name, updated_product.price, updated_product.qty, updated_product.productID))
+connection.commit()
+
+# Retrieve and print the updated product
+cursor.execute("SELECT * FROM products WHERE productID = ?", (updated_product.productID,))
+print(cursor.fetchone())
+
 # Close the connection
 cursor.close()
 connection.close()
-
-
-# Updating the product's name
-updated_product = product.UpdateProduct(new_product.productID, new_product.name, new_product.price, new_product.qty)
-
-# Now update the name
-updated_product.update_name("Green Apple")
-
-# Print updated product details
-#print(f"Updated Product: ID={updated_product.productID}, Name={updated_product.name}, Price={updated_product.price}, Quantity={updated_product.qty}")
