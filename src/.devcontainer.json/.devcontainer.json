@@ -1,0 +1,17 @@
+{
+    "name": "Python-SQL-C++-Dev",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "args": {
+            "VARIANT": "3.8",
+            "INSTALL_NODE": "true",
+            "NODE_VERSION": "lts/*"
+        }
+    },
+    
+    "forwardPorts": [
+        8000 // Replace with your application's port
+    ],
+    "postCreateCommand": "pip install -r requirements.txt",
+    "remoteUser": "vscode"
+}
