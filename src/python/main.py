@@ -1,51 +1,59 @@
 import product
 import sqlite3
+import os
 
-# Establish a connection and create a cursor
-connection = sqlite3.connect('test_database.db')
-cursor = connection.cursor()
+print("Current working directory:", os.getcwd())
 
-# SQL command to create the table
-create_table_command = """
-CREATE TABLE IF NOT EXISTS products (
-    productID INTEGER PRIMARY KEY,
-    name TEXT,
-    price REAL,
-    quantity INTEGER
-);
-"""
+# Get the directory of the current script
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Execute the command
-cursor.execute(create_table_command)
+# Construct the absolute path to the SQL and database files
+sql_file_path = os.path.join(current_dir, 'sql/tables.sql')
+db_file_path = os.path.join(current_dir, 'sql/database.db')
 
-# Commit the changes
-connection.commit()
+# Ensure the 'sql' directory exists
+sql_directory = os.path.join(current_dir, 'sql')
+if not os.path.exists(sql_directory):
+    os.makedirs(sql_directory)
 
+# Initialize database
+def init_db():
+    with sqlite3.connect(db_file_path) as conn:
+        with open(sql_file_path, 'r') as f:
+            conn.executescript(f.read())
 
-new_product = product.AddProduct(101, "Apple", 0.50, 100)
+if __name__ == "__main__":
+    init_db()
 
-#print(f"New Product: ID={new_product.productID}, Name={new_product.name}, Price={new_product.price}, Quantity={new_product.qty}")
+    # Establish a connection and create a cursor
+    connection = sqlite3.connect(db_file_path)
+    cursor = connection.cursor()
 
-# Insert the product into the database
-insert_command = "INSERT INTO products (productID, name, price, quantity) VALUES (?, ?, ?, ?)"
-cursor.execute(insert_command, (new_product.productID, new_product.name, new_product.price, new_product.qty))
+    # Add a new product
+    new_product = product.AddProduct(None, "Apple", 0.50, 100)  # productID is set to None
 
-# Retrieve and print all products
-cursor.execute("SELECT * FROM products")
-for row in cursor.fetchall():
-    print(row)
+    # Insert the product into the database
+    insert_command = "INSERT INTO products (name, price, quantity) VALUES (?, ?, ?)"
+    cursor.execute(insert_command, (new_product.name, new_product.price, new_product.qty))
 
+    # Retrieve and print all products
+    cursor.execute("SELECT * FROM products")
+    for row in cursor.fetchall():
+        print(row)
 
-# Update the product's details
-updated_product = product.UpdateProduct(new_product.productID, "Green Apple", 0.55, 120)
-update_command = "UPDATE products SET name = ?, price = ?, quantity = ? WHERE productID = ?"
-cursor.execute(update_command, (updated_product.name, updated_product.price, updated_product.qty, updated_product.productID))
-connection.commit()
+    # Assuming you want to update the first product added
+    productID_to_update = cursor.lastrowid
+    updated_product = product.UpdateProduct(productID_to_update, "Green Apple", 0.55, 120)
 
-# Retrieve and print the updated product
-cursor.execute("SELECT * FROM products WHERE productID = ?", (updated_product.productID,))
-print(cursor.fetchone())
+    # Update the product's details
+    update_command = "UPDATE products SET name = ?, price = ?, quantity = ? WHERE productID = ?"
+    cursor.execute(update_command, (updated_product.name, updated_product.price, updated_product.qty, updated_product.productID))
+    connection.commit()
 
-# Close the connection
-cursor.close()
-connection.close()
+    # Retrieve and print the updated product
+    cursor.execute("SELECT * FROM products WHERE productID = ?", (updated_product.productID,))
+    print(cursor.fetchone())
+
+    # Close the connection
+    cursor.close()
+    connection.close()
