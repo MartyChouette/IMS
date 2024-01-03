@@ -1,7 +1,7 @@
 # IMS
-inventory management system
+<h1>inventory management system</h1>
 
-python
+<h2>python</h2>
   backend
     -add product
     -stock update
@@ -12,9 +12,9 @@ python
       -trends (matplotlib)
       -inv levels
       -buying patterns
-c++
+<h2>c++</h2>
   -realtime inventory calculations
   -predictive nalytics for restock
   -cython or pythonC?
-sqlite
-  databse
+<h2>sqlite</h2>
+  database
