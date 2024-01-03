@@ -4,25 +4,27 @@
 <h2>python</h2>
   backend</br>
   <ul>
-    <li>-add product
-    <li>-stock update
-    <li>-sales procesing & data analysis
+    <li>add product
+    <li>stock update
+    <li>sales procesing & data analysis
   </ul>
   frontend</br>
    <ul>
-    <li>-flask</li>
-   <li> -dashboard</li>
-          -trends (matplotlib)
-          -inv levels
-          -buying patterns
+    <li>flask</li>
+    <li>dashboard</li>
+     <ul>
+          <li>trends (matplotlib)</li>
+          <li>inv levels</li>
+          <li>buying patterns</li>
+    </ul>
   </ul>
 <h2>c++</h2>
   <ul>
-  <li>-realtime inventory calculations</li>
-  <li>-predictive nalytics for restock</li>
-  <li>-cython or pythonC?</li>
+  <li>realtime inventory calculations</li>
+  <li>predictive nalytics for restock</li>
+  <li>cython or pythonC?</li>
   </ul>
 <h2>sqlite</h2>
   <ul>
-  <li>-database</li>
+  <li>database</li>
   </ul>
