@@ -2,11 +2,13 @@
 <h1>inventory management system</h1>
 
 <h2>python</h2>
-  backend
+  backend</br>
+  <ul>
     -add product
     -stock update
     -sales procesing & data analysis
-  frontend
+ </ul>
+  frontend</br>
     -flask
     -dashboard
       -trends (matplotlib)
